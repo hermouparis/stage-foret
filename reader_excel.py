@@ -7,7 +7,6 @@ Created on Thu Mar 10 08:13:08 2022
 """
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import plotly.express as px
 
       

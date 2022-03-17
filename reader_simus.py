@@ -8,14 +8,14 @@ Created on Thu Mar 10 12:01:36 2022
 
 import pandas as pd
 import numpy as np
-from snowtools.utils.prosimu import prosimu
+import netCDF4 as nc
 
 def getxyfromvar(file, var):
-    with prosimu(file) as p:
-        y = p.read(var)
-        time = p.readtime()
+    dat = nc.Dataset(file)
+    time = nc.num2date(dat['time'][:], dat['time'].units, only_use_cftime_datetimes=False, only_use_python_datetimes=True)
+    y = dat[var][:]
         
-    return time, y
+    return np.array(time), np.array(y).flatten()
 
 def getDataFramefromvar(file, var):
     time, y = getxyfromvar(file, var)
