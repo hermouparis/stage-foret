@@ -18,6 +18,11 @@ def jalons_transect_principal(file, sheet_num=1, column_dates=0, cols="B,D:U"):
     data.index.name = "Date"
     
     return data
+
+def feuille_de_travail(file):
+    data = pd.read_excel (file, header=0, index_col=0, skiprows=[1], sheet_name='feuilledetravail')
+
+    return data
         
 
 def prettyPlot(data):
