@@ -7,7 +7,6 @@ Created on Thu Mar 10 08:13:08 2022
 """
 
 import pandas as pd
-import plotly.express as px
 
       
 def jalons_transect_principal(file, sheet_num=1, column_dates=0, cols="B,D:U"):
@@ -23,18 +22,17 @@ def feuille_de_travail(file):
     data = pd.read_excel (file, header=0, index_col=0, skiprows=[1], sheet_name='feuilledetravail')
 
     return data
-        
 
-def prettyPlot(data):
-    long_data = pd.melt(data.reset_index(), id_vars=["Date"])
-    fig = px.line(long_data, x="Date", y="value", color="variable")
-    fig.show()
-    return fig
-        
-    
-    
-if __name__ == "__main__":
-    data = jalons_transect_principal('data/jtp_20192020.xlsm')
-    print(data)
-    fig = prettyPlot(data)
-    fig.show(renderer="browser")
+
+def armoire_arbre(file):
+    meta_label = {
+        "Temp_C(1)" : "Tronc Sud",
+        "Temp_C(2)" : "Tronc Nord",
+        "Temp_C(3)" : "Branche Nord",
+        "Temp_C(4)" : "Branche Sud"
+    }
+    na_values = ['INF', 'NAN']
+    data = pd.read_csv(file, header=0, index_col=0, low_memory=False, na_values=na_values)
+    data.index = pd.to_datetime(data.index)
+
+    return data
